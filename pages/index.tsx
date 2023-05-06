@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <Layout>
       {data?.map((list) => {
-        return <MoviesList key={list._id} title={list.title} data={[]} />;
+        return <MoviesList key={list._id} title={list.title} />;
       })}
     </Layout>
   );

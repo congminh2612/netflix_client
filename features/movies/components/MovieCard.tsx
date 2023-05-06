@@ -1,56 +1,64 @@
 import { MovieType } from "@/types/typeMovie";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/button/Button";
 import { AiFillPlayCircle, AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { IoChevronDownCircleOutline } from "react-icons/io5";
 import { IoAddCircleOutline } from "react-icons/io5";
-
+import { MdOutlinePlayCircleOutline } from "react-icons/md";
+import Link from "next/link";
+import { useRouter } from "next/router";
 interface MovieCardProps {
   movie: MovieType;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+  const router = useRouter();
+  const handleClick = (id: string) => {
+    router.push(`/watch/${id}`);
+  };
   return (
     <div>
-      <div className="h-[10vw] group col-span relative bg-zinc-900">
+      <div className="h-[10vw] group col-span relative bg-zinc-900 ">
         <img
           src={movie.thumbnailUrl}
           alt="image"
           className="cursor-pointer object-cover w-full h-[8vw] transition duration round-md delay-300 
           shadow-xl group-hover:opacity-0"
         />
+
         <div
           className="
-           shadow-lg
-            opacity-0
-            absolute
-            top-0
-            transition
-            duration-200
-            z-10
-            delay-300
-            w-full
-            scale-0 
-            group-hover:scale-[1.4]
-            group-hover:-translate-y-[4vw]
-            group-hover:translate-x-[1vw]
-            group-hover:opacity-100
-          "
+             shadow-lg
+              opacity-0
+              absolute
+              top-0
+              transition
+              duration-200
+              z-10
+              delay-300
+              w-full
+              scale-0 
+              group-hover:scale-[1.4]
+              group-hover:-translate-y-[4vw]
+              group-hover:translate-x-[1vw]
+              group-hover:opacity-100
+            "
         >
-          <video
-            poster={movie.thumbnailUrl}
-            src={movie.videoUrl}
-            autoPlay
-            muted
-            className="w-full h-[10vw] object-cover rounded-t-md shadow-md"
-          ></video>
+          <img
+            onClick={() => handleClick(movie._id)}
+            src={movie.thumbnailUrl}
+            alt=""
+            className="w-full h-[10vw] object-cover rounded-t-md shadow-md cursor-pointer "
+          />
+
           <div className="w-full pb-4 bg-zinc-800 absolute shadow-lg">
             <div className="flex pt-3 px-3 items-center justify-between">
               <div className="flex items-center space-x-[6px]">
                 <AiFillPlayCircle
                   size={28}
                   className="cursor-pointer hover:opacity-80"
+                  onClick={() => handleClick(movie._id)}
                 />
                 <IoAddCircleOutline
                   size={28}

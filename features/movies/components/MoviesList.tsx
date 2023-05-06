@@ -8,7 +8,6 @@ import { getMovieByList } from "@/features/list/services/getMovieByList";
 
 interface MovieListProps {
   title: string;
-  movies: MovieType[];
 }
 
 const MoviesList: React.FC<MovieListProps> = ({ title }) => {
@@ -16,7 +15,6 @@ const MoviesList: React.FC<MovieListProps> = ({ title }) => {
     getMovieByList(title)
   );
 
-  console.log(data);
   return (
     <div className="px-12 mt-4 space-y-8 text-white text-lg font-medium">
       <p>{title}</p>
