@@ -8,18 +8,15 @@ import { getMovieByList } from "@/features/list/services/getMovieByList";
 
 interface MovieListProps {
   title: string;
+  movies: MovieType[];
 }
 
-const MoviesList: React.FC<MovieListProps> = ({ title }) => {
-  const { data } = useQuery<MovieType[]>(["movies", title], () =>
-    getMovieByList(title)
-  );
-
+const MoviesList: React.FC<MovieListProps> = ({ title, movies }) => {
   return (
     <div className="px-12 mt-4 space-y-8 text-white text-lg font-medium">
       <p>{title}</p>
       <div className="grid grid-cols-6 gap-4">
-        {data?.map((movie) => {
+        {movies?.map((movie) => {
           return <MovieCard key={movie._id} movie={movie} />;
         })}
       </div>

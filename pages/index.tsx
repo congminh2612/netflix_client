@@ -22,11 +22,13 @@ export async function getStaticProps() {
 }
 export default function Home() {
   const { data } = useQuery<ListType[]>("list", getListMovies);
-
+  console.log(data);
   return (
     <Layout>
       {data?.map((list) => {
-        return <MoviesList key={list._id} title={list.title} />;
+        return (
+          <MoviesList key={list._id} title={list.title} movies={list.movies} />
+        );
       })}
     </Layout>
   );
