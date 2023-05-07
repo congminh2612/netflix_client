@@ -4,6 +4,7 @@ import { useOnClickOutside } from "usehooks-ts";
 import { optionBasic } from "./type";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import { MdOutlineManageAccounts } from "react-icons/md";
 
 interface propsMenuDropdown {
   options: optionBasic[];
@@ -11,10 +12,11 @@ interface propsMenuDropdown {
   label: React.ReactNode;
   classNameItem?: string;
   className?: string;
+  item?: React.ReactNode;
 }
 
 const MenuDropdown = (props: propsMenuDropdown) => {
-  const { options, label, labelOpen, classNameItem, className } = props;
+  const { options, label, labelOpen, classNameItem, className, item } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useRef(null);
 
@@ -40,15 +42,17 @@ const MenuDropdown = (props: propsMenuDropdown) => {
             leaveTo="transform scale-95 opacity-0"
           >
             <Menu.Items static className={twMerge("flex flex-col", className)}>
-              {options.map((item) => {
+              {options.map((option) => {
                 return (
-                  <Menu.Item key={item.name}>
-                    <Link href={item.link} className={twMerge(classNameItem)}>
-                      {item.value}
+                  <Menu.Item key={option.name}>
+                    <Link href={option.link} className={twMerge(classNameItem)}>
+                      <div>{option.icon}</div>
+                      <p> {option.value}</p>
                     </Link>
                   </Menu.Item>
                 );
               })}
+              <div>{item}</div>
             </Menu.Items>
           </Transition>
         </>

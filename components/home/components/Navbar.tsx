@@ -11,8 +11,16 @@ import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import TextInput from "@/components/input/TextInput";
 import { navbarLinks } from "../constants/navbarLink";
 import { useOnClickOutside } from "usehooks-ts";
+import { useDispatch } from "react-redux";
+import { logoutSuccess } from "@/features/auth/AuthSlice";
+import { useRouter } from "next/router";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Navbar = () => {
+  const router = useRouter();
+  const { currentUser } = useCurrentUser();
+  const dispatch = useDispatch();
+
   const [showBackground, setShowBackground] = useState<boolean>();
   const [showInput, setShowInput] = useState<boolean>(false);
   const ref = useRef(null);
@@ -30,6 +38,11 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleClickLogout = () => {
+    dispatch(logoutSuccess());
+    router.push("/auth/login");
+  };
 
   const handleClick = () => {
     setShowInput(!showInput);
@@ -91,7 +104,7 @@ const Navbar = () => {
           </div>
           <div>
             <p className="2xl:text-lg lg:text-base md:text-sm text-xs text-gray-200">
-              Trẻ em
+              {currentUser?.username}
             </p>
           </div>
           <div>
@@ -104,6 +117,14 @@ const Navbar = () => {
 
           <div className="relative pt-1">
             <MenuDropdown
+              item={
+                <div
+                  onClick={handleClickLogout}
+                  className="text-white pl-6 mt-2 py-2 hover:bg-zinc-600 cursor-pointer"
+                >
+                  Đăng xuất khỏi netflix
+                </div>
+              }
               options={optionsNavbarHome}
               label={
                 <div className="flex items-center space-x-2 ">
@@ -121,8 +142,8 @@ const Navbar = () => {
                   <BiUpArrow color="#e5e5e5" size={12} />
                 </div>
               }
-              classNameItem="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-200 hover:text-gray-900"
-              className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+              classNameItem="block px-4 py-2 text-base font-normal text-white flex items-center space-x-3 hover:bg-zinc-600"
+              className="origin-top-right p-3 absolute right-0 mt-2 w-60 rounded-md shadow-lg bg-zinc-900 ring-1 ring-black ring-opacity-5"
             />
           </div>
         </div>

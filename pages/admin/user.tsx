@@ -6,20 +6,18 @@ import { axiosInstance } from "@/services/axios.config";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import ProtectedRoute from "@/features/auth/ProtectedRoute";
 
 const User = () => {
   const user = useSelector((state: RootState) => state.auth.currentUser);
   console.log(user);
 
-  const { data, isSuccess } = useQuery("products", () =>
-    getAllUser(user?.accessToken)
-  );
-  console.log(data);
-
   return (
-    <LayoutAdmin>
-      <h1>Hello</h1>
-    </LayoutAdmin>
+    <ProtectedRoute>
+      <LayoutAdmin>
+        <h1>Hello</h1>
+      </LayoutAdmin>
+    </ProtectedRoute>
   );
 };
 

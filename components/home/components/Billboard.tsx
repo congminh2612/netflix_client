@@ -6,8 +6,10 @@ import { IoPlay } from "react-icons/io5";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { HiSpeakerXMark, HiSpeakerWave } from "react-icons/hi2";
 import { log } from "console";
+import useWatch from "@/hooks/useWatch";
 
 const Billboard = () => {
+  const { navigateToWatch } = useWatch();
   const { data, isError } = useQuery("random", getMovieBillBoard, {
     cacheTime: 1000 * 60 * 5, // Cache data for 5 minutes
     staleTime: 1000 * 60 * 1, // Use stale data for 1 minute
@@ -25,15 +27,16 @@ const Billboard = () => {
       ></video>
 
       <div className="absolute top-[25%] md:top-[30%] ml-4 md:ml-16">
-        <p className="text-white text-xl md:text-5xl w-[50%] lg:text-6xl font-bold drop-shadow-xl">
+        <p className="text-white text-xl md:text-2xl lg:text-3xl  xl:text-6xl w-[50%]  font-bold drop-shadow-xl">
           {data?.title}
         </p>
-        <p className="text-white text-[8px] md:text-lg mt-3 md:mt-8 w-90% md:w-[80%] lg:w-[50%] drop-shadow-xl">
+        <p className="text-white text-[8px] md:text-sm xl:text-base 2xl:text-lg mt-3 md:mt-8 w-90% md:w-[80%] lg:w-[50%] drop-shadow-xl">
           {data?.description}
         </p>
         <div className="flex space-x-6 pt-10">
           <div className="relative">
             <Button
+              handleClick={() => navigateToWatch(data?._id)}
               text={"Phát"}
               className="bg-white hover:bg-gray-200 py-2 pl-[50px] pr-6 font-medium text-lg"
             />

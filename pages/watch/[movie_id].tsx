@@ -4,6 +4,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { QueryClient, useQuery, dehydrate } from "react-query";
 import { getMovieById } from "@/features/movies/services/getMovieById";
 import { MovieType } from "@/types/typeMovie";
+import ProtectedRoute from "@/features/auth/ProtectedRoute";
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
@@ -30,16 +31,18 @@ const Watch = () => {
     return <h1>Loading ....</h1>;
   }
   return (
-    <div>
-      <video
-        src={data?.videoUrl}
-        poster={data?.thumbnailUrl}
-        className="w-full h-[100vh] object-cover "
-        muted
-        autoPlay
-        controls
-      ></video>
-    </div>
+    <ProtectedRoute>
+      <div>
+        <video
+          src={data?.videoUrl}
+          poster={data?.thumbnailUrl}
+          className="w-full h-[100vh] object-cover "
+          muted
+          autoPlay
+          controls
+        ></video>
+      </div>
+    </ProtectedRoute>
   );
 };
 

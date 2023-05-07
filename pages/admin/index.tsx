@@ -1,11 +1,12 @@
 import LayoutAdmin from "@/components/admin/layouts/LayoutAdmin";
+import ProtectedRoute from "@/features/auth/ProtectedRoute";
 import React from "react";
 
 const index = () => {
   return (
-    <div>
-      <LayoutAdmin />
-    </div>
+    <ProtectedRoute>
+      <LayoutAdmin></LayoutAdmin>
+    </ProtectedRoute>
   );
 };
 

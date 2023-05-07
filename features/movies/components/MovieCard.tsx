@@ -8,15 +8,14 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { MdOutlinePlayCircleOutline } from "react-icons/md";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import useWatch from "@/hooks/useWatch";
 interface MovieCardProps {
   movie: MovieType;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   const router = useRouter();
-  const handleClick = (id: string) => {
-    router.push(`/watch/${id}`);
-  };
+  const { navigateToWatch } = useWatch();
   return (
     <div>
       <div className="h-[10vw] group col-span relative bg-zinc-900 ">
@@ -46,7 +45,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
             "
         >
           <img
-            onClick={() => handleClick(movie._id)}
+            onClick={() => navigateToWatch(movie._id)}
             src={movie.thumbnailUrl}
             alt=""
             className="w-full h-[10vw] object-cover rounded-t-md shadow-md cursor-pointer "
@@ -58,7 +57,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                 <AiFillPlayCircle
                   size={28}
                   className="cursor-pointer hover:opacity-80"
-                  onClick={() => handleClick(movie._id)}
+                  onClick={() => navigateToWatch(movie._id)}
                 />
                 <IoAddCircleOutline
                   size={28}

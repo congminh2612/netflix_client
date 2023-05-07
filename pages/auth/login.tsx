@@ -11,7 +11,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
-import { loginSuccess } from "@/features/auth/authSlice";
+import { loginSuccess } from "@/features/auth/AuthSlice";
 import TextInput from "@/components/input/TextInput";
 import Button from "@/components/button/Button";
 import {
@@ -61,7 +61,7 @@ const Login = () => {
     onSuccess(data, variables, context) {
       dispatch(loginSuccess(data));
       console.log(data);
-      router.push("/admin/user");
+      router.push("/");
     },
     onError(error, variables, context) {
       toast.error("Tài khoản hoặc mật khẩu không chính xác");
