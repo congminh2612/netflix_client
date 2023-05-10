@@ -15,20 +15,8 @@ const isLoggedIn = store.getState().auth.isLoggedIn;
 axiosInstance.interceptors.request.use(
   async (config) => {
     if (isLoggedIn && currentUser !== null) {
-      let date = new Date();
       const accessToken = currentUser.accessToken;
-      const decodedToken: any = jwtDecode(accessToken);
-      // if (decodedToken.exp < date.getTime() / 1000) {
-      //   const data = await refreshToken();
-      //   const refreshUser = {
-      //     ...currentUser,
-      //     accessToken: data.newAccessToken,
-      //   };
-      //   store.dispatch(loginSuccess(refreshUser));
-      //   config.headers.Authorization = `Bearer ${data.newAccessToken}`;
-      // } else {
-      //   config.headers.Authorization = `Bearer ${accessToken}`;
-      // }
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
     return config;
@@ -48,6 +36,3 @@ axios.interceptors.response.use(
 );
 
 export { axiosInstance };
-function jwt_decode() {
-  throw new Error("Function not implemented.");
-}

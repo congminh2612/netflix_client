@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { MovieType } from "@/types/typeMovie";
 import React, { useState } from "react";
 import Image from "next/image";
@@ -9,11 +10,29 @@ import { MdOutlinePlayCircleOutline } from "react-icons/md";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import useWatch from "@/hooks/useWatch";
+import ModalMovie from "@/components/modal/ModalMovie";
+import { useDispatch } from "react-redux";
+import { openModal } from "@/components/modal/state/ModalSlice";
+import { axiosInstance } from "@/services";
+import { useQuery, useQueryClient } from "react-query";
+import { getMovieById } from "../services/getMovieById";
 interface MovieCardProps {
   movie: MovieType;
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
+  const queryClient = useQueryClient();
+  const handleOpenModal = async (id: string) => {
+    try {
+      const data = await queryClient.fetchQuery(["movie", id], () =>
+        getMovieById(id)
+      );
+      dispatch(openModal(data));
+    } catch (error) {
+      throw new Error("error");
+    }
+  };
+  const dispatch = useDispatch();
   const router = useRouter();
   const { navigateToWatch } = useWatch();
   return (
@@ -73,6 +92,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
                 <IoChevronDownCircleOutline
                   size={28}
                   className="cursor-pointer hover:opacity-80 "
+                  onClick={() => handleOpenModal(movie._id)}
                 />
               </div>
             </div>
@@ -96,6 +116,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
           </div>
         </div>
       </div>
+      <ModalMovie />
     </div>
   );
 };
